@@ -1,6 +1,6 @@
 # Nodevember 2015 Schedule Grid
 
-I wanted to view the Nodevember schedule in a grid format in order to more easily choose between concurrent sessions, so I made this.
+I wanted to view the [Nodevember schedule](http://nodevember.org/schedule.html) in a grid format in order to more easily choose between concurrent sessions, so I made this.
 
 ## Setup
 
