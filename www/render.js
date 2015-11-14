@@ -66,11 +66,12 @@ var ScheduleView = Backbone.View.extend({
     var cell = $a.data();
     var selected = $a.find('span.glyphicon').is('.glyphicon-check');
     $a.closest('tr').find('td').removeClass('info');
-    $a.find('span.glyphicon').toggleClass('glyphicon-check').toggleClass('glyphicon-unchecked');
+    $a.closest('tr').find('span.glyphicon').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
     if (selected) {
       mine[cell.day][cell.time] = null;
     } else {
       $a.closest('td').addClass('info');
+      $a.find('span.glyphicon').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
       mine[cell.day][cell.time] = cell.room;
     }
     localStorage.setItem('myNodevemberSchedule', JSON.stringify(mine));
