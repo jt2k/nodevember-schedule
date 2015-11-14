@@ -1,0 +1,17 @@
+.summary {
+  font-size: 11px;
+}
+.summary img, .modal-body img {
+  max-width: 50px;
+  max-height: 50px;
+  margin: 0 10px 10px 0;
+}
+td strong a {
+  font-size: 15px;
+}
+@media (min-width: 768px) {
+  .container-fluid {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
