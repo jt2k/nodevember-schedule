@@ -17,3 +17,7 @@ bower install
 ```
 
 Open `www/index.html` in your browser (either locally or through a web server). No server-side code required.
+
+## Demo
+
+http://jasontan.org/nodevember/
