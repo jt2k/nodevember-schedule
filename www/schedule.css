@@ -6,7 +6,8 @@
   max-height: 50px;
   margin: 0 10px 10px 0;
 }
-td strong a {
+.title {
+  font-weight: bold;
   font-size: 15px;
 }
 @media (min-width: 768px) {

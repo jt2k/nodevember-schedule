@@ -46,29 +46,30 @@
           <% day.get('groupedSlots').each(function(timeSlot) { %>
             <tr>
               <th><%- timeSlot.id %></th>
-              <% if (timeSlot.items.length == 1) { %>
-                <td colspan="4">
-                  <strong><a href="#" class="show-details"><%- timeSlot.items[0].title %></a></strong><br />
-                  <%- timeSlot.items[0].room %>
-                  <div class="summary hidden"><%= _.unescape(timeSlot.items[0].summary) %></div>
-                </td>
-              <% } else { %>
+              
                 <% _.each(timeSlot.items, function(item) { %>
-                  <td>
-                    <strong><a href="#" class="show-details"><%- item.title %></a></strong><br />
-                    <strong><%- item.speaker %></strong>, <em><%- item.company %></em><br />
+                  <td<% if (timeSlot.items.length == 1) { %> colspan="4"<% } %>>
+                    <div class="title"><a href="#" class="show-details"><%- item.title %></a></div>
+                    <% if (item.speaker) { %>
+                      <strong><%- item.speaker %></strong>, <em><%- item.company %></em><br />
+                    <% } else if (item.company) { %>
+                      <em>Sponsored by <%- item.company %></em><br />
+                    <% } %>
                     <%- item.room %>
                     <div class="summary hidden">
                       <p class="clearfix">
                         <img src="<%= item.photo %>" class="pull-left"/>
-                        <strong><%- item.speaker %></strong>, <em><%- item.company %></em><br />
+                        <% if (item.speaker) { %>
+                          <strong><%- item.speaker %></strong>, <em><%- item.company %></em><br />
+                        <% } else if (item.company) { %>
+                          <em>Sponsored by <%- item.company %></em><br />
+                        <% } %>
                         <%- item.room %>
                       </p>
                       <%= _.unescape(item.summary) %>
                     </div>
                   </td>
                 <% }); %>
-              <% } %>
             </tr>
           <% }); %>
         </tbody>
