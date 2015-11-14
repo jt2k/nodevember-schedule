@@ -23,11 +23,21 @@ _.each(schedule, function(day) {
 // Remove Friday
 schedule = _.rest(schedule);
 
+// Retrieve saved schedule
+var mine = JSON.parse(localStorage.getItem('myNodevemberSchedule')) || {};
+if (!mine.Saturday) {
+  mine.Saturday = {};
+}
+if (!mine.Sunday) {
+  mine.Sunday = {};
+}
+
 // Define view
 var ScheduleView = Backbone.View.extend({
   el: $('#schedule'),
   events: {
-    'click a.show-details': 'showDetails'
+    'click a.show-details': 'showDetails',
+    'click a.select-item': 'selectItem'
   },
   initialize: function() {
     this.render();
@@ -37,7 +47,7 @@ var ScheduleView = Backbone.View.extend({
     var dayTemplate = _.template($('#day-template').html());
     this.$el.empty();
     this.collection.each(function(day) {
-      self.$el.append(dayTemplate({ day: day }));
+      self.$el.append(dayTemplate({ day: day, mine: mine }));
     });
   },
   showDetails: function(e) {
@@ -49,6 +59,21 @@ var ScheduleView = Backbone.View.extend({
     $('#summary-modal .modal-title').text($(e.currentTarget).text());
     $('#summary-modal .modal-body').html(content);
     $('#summary-modal').modal();
+  },
+  selectItem: function(e) {
+    e.preventDefault();
+    var $a = $(e.currentTarget);
+    var cell = $a.data();
+    var selected = $a.find('span.glyphicon').is('.glyphicon-check');
+    $a.closest('tr').find('td').removeClass('info');
+    $a.find('span.glyphicon').toggleClass('glyphicon-check').toggleClass('glyphicon-unchecked');
+    if (selected) {
+      mine[cell.day][cell.time] = null;
+    } else {
+      $a.closest('td').addClass('info');
+      mine[cell.day][cell.time] = cell.room;
+    }
+    localStorage.setItem('myNodevemberSchedule', JSON.stringify(mine));
   }
 });
 

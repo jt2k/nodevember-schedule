@@ -43,33 +43,40 @@
           </tr>
         </thead>
         <tbody>
-          <% day.get('groupedSlots').each(function(timeSlot) { %>
+          <%
+            day.get('groupedSlots').each(function(timeSlot) { 
+              var saved = mine[day.get('title')][timeSlot.id];
+          %>
             <tr>
               <th><%- timeSlot.id %></th>
-              
-                <% _.each(timeSlot.items, function(item) { %>
-                  <td<% if (timeSlot.items.length == 1) { %> colspan="4"<% } %>>
-                    <div class="title"><a href="#" class="show-details"><%- item.title %></a></div>
-                    <% if (item.speaker) { %>
-                      <strong><%- item.speaker %></strong>, <em><%- item.company %></em><br />
-                    <% } else if (item.company) { %>
-                      <em>Sponsored by <%- item.company %></em><br />
-                    <% } %>
-                    <%- item.room %>
-                    <div class="summary hidden">
-                      <p class="clearfix">
-                        <img src="<%= item.photo %>" class="pull-left"/>
-                        <% if (item.speaker) { %>
-                          <strong><%- item.speaker %></strong>, <em><%- item.company %></em><br />
-                        <% } else if (item.company) { %>
-                          <em>Sponsored by <%- item.company %></em><br />
-                        <% } %>
-                        <%- item.room %>
-                      </p>
-                      <%= _.unescape(item.summary) %>
-                    </div>
-                  </td>
-                <% }); %>
+              <%
+                _.each(timeSlot.items, function(item) {
+                  var single = (timeSlot.items.length == 1);
+                  var highlight = (saved && (saved == item.room));
+              %>
+                <td<% if (single) { %> colspan="4"<% } %><% if (highlight) { %> class="info"<% } %>>
+                  <div class="title"><a href="#" class="show-details"><%- item.title %></a></div>
+                  <% if (item.speaker) { %>
+                    <strong><%- item.speaker %></strong>, <em><%- item.company %></em><br />
+                  <% } else if (item.company) { %>
+                    <em>Sponsored by <%- item.company %></em><br />
+                  <% } %>
+                  <%- item.room %>
+                  <p class="text-left"><a href="#" class="select-item" data-day="<%- day.get('title') %>" data-time="<%- timeSlot.id %>" data-room="<%- item.room %>"><span class="glyphicon glyphicon-<%= highlight ? 'check' : 'unchecked'%>"></span></a></p>
+                  <div class="summary hidden">
+                    <p class="clearfix">
+                      <img src="<%= item.photo %>" class="pull-left"/>
+                      <% if (item.speaker) { %>
+                        <strong><%- item.speaker %></strong>, <em><%- item.company %></em><br />
+                      <% } else if (item.company) { %>
+                        <em>Sponsored by <%- item.company %></em><br />
+                      <% } %>
+                      <%- item.room %>
+                    </p>
+                    <%= _.unescape(item.summary) %>
+                  </div>
+                </td>
+              <% }); %>
             </tr>
           <% }); %>
         </tbody>
